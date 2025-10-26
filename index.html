@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Rescue Connect - Connecting excess food with those in need</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2E8B57;
+            --primary-dark: #1e6b42;
+            --secondary: #FF6B35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .hero-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .option-card {
+            background-color: rgba(255,255,255,0.9);
+            color: var(--dark);
+            padding: 25px;
+            border-radius: 8px;
+            width: 250px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .option-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .option-card p {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .option-card .btn {
+            width: 100%;
+        }
+        
+        /* Mission section */
+        .mission {
+            padding: 80px 0;
+            background-color: var(--light);
+            text-align: center;
+        }
+        
+        .mission h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .mission p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            width: 200px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* Services section */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .services h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+        
+        .service-cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .service-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .service-card-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-card-content {
+            padding: 25px;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            margin-bottom: 20px;
+        }
+        
+        /* Leaderboard styles */
+        .leaderboard {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .leaderboard h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .leaderboard > .container > p {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .leaderboard-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-options, .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-options label {
+            font-weight: 500;
+        }
+
+        .filter-options select, .search-box input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-list {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 50px 1fr 100px 100px;
+            gap: 15px;
+            padding: 15px 20px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .leaderboard-entry {
+            display: grid;
+            grid-template-columns: 50px 1fr 100px 100px;
+            gap: 15px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .leaderboard-entry:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-entry:hover {
+            background-color: #f9f9f9;
+        }
+
+        .rank {
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .rank-1 {
+            color: gold;
+        }
+
+        .rank-2 {
+            color: silver;
+        }
+
+        .rank-3 {
+            color: #cd7f32; /* bronze */
+        }
+
+        .restaurant-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .restaurant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .restaurant-name {
+            font-weight: 500;
+        }
+
+        .points {
+            font-weight: bold;
+            color: var(--primary);
+            text-align: right;
+        }
+
+        .food-donated {
+            text-align: right;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .medal {
+            font-size: 1.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Modal styles (added) */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .modal {
+            background: white;
+            color: var(--dark);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 520px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .modal h3 { color: var(--primary); margin-bottom: 10px; }
+        .modal .form-group { margin-bottom: 12px; }
+        .modal label { display:block; font-size: 0.9rem; margin-bottom:6px; }
+        .modal input, .modal textarea, .modal select {
+            width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;
+        }
+        .modal .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+        .modal-close { background:transparent; border:none; font-size:1.1rem; cursor:pointer; position:absolute; right:16px; top:8px; }
+        .list-item { padding:10px; border-bottom:1px solid #eee; }
+        .empty { text-align:center; color:var(--gray); padding:20px 0; }
+        
+        /* Claim section styles */
+        .claim-section {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .quantity-selector input {
+            width: 60px;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Multiple items styles */
+        .item-entry {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+            background-color: #f9f9f9;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .remove-item {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .service-cards {
+                flex-direction: column;
+            }
+            
+            .quantity-selector {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .leaderboard-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .leaderboard-header, .leaderboard-entry {
+                grid-template-columns: 40px 1fr 80px;
+            }
+            
+            .food-donated {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>Food Rescue <span>Connect</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#leaderboard">Leaderboard</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-outline">Login</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Connecting excess food with those in need</h2>
+            <p>Fight Hunger, Reduce Waste</p>
+            <p>Connect restaurants with excess food to shelters and communities in need</p>
+            
+            <p>Welcome! Please login or create an account to start using Food Rescue Connect.</p>
+            
+            <div class="hero-options">
+                <div class="option-card">
+                    <h3>Have Food to Donate</h3>
+                    <p>Restaurants, hotels, and food businesses can list excess food</p>
+                    <a href="#" class="btn btn-primary">Donate Food</a>
+                </div>
+                <div class="option-card">
+                    <h3>I Need Food</h3>
+                    <p>Shelters, NGOs, and communities can find available food donations</p>
+                    <a href="#" class="btn btn-primary">Find Food</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission" id="about">
+        <div class="container">
+            <h2>Join Our Mission</h2>
+            <p>Food Rescue Connect is hoping to help redirect over 1.2 million pounds of food from landfills to people in need.</p>
+            <p>Our goal of 850+ restaurants and 320+ shelters work together to fight hunger and reduce environmental impact.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">1.2M+</div>
+                    <div class="stat-label">Pounds of Food Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">850+</div>
+                    <div class="stat-label">Partner Restaurants</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">320+</div>
+                    <div class="stat-label">Shelters Served</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="how-it-works">
+        <div class="container">
+            <h2>How Food Rescue Connect Works</h2>
+            <div class="service-cards">
+                <div class="service-card">
+                    <div class="service-card-img" style="background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="service-card-content">
+                        <h3>For Restaurants & Hotels</h3>
+                        <p>List your excess food easily. Help your community while reducing waste.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-card-img" style="background-image: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="service-card-content">
+                        <h3>For Shelters & NGOs</h3>
+                        <p>Find fresh, available food donations in your area. Feed more people.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-card-img" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
+                    <div class="service-card-content">
+                        <h3>Environmental Impact</h3>
+                        <p>Reduce food waste and help achieve Sustainable Development Goals.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="leaderboard" id="leaderboard">
+        <div class="container">
+            <h2>Restaurant Leaderboard</h2>
+            <p>See which restaurants are making the biggest impact in fighting hunger and reducing waste</p>
+            
+            <div class="leaderboard-controls">
+                <div class="filter-options">
+                    <label for="timeframe">Timeframe:</label>
+                    <select id="timeframe">
+                        <option value="all-time">All Time</option>
+                        <option value="monthly">This Month</option>
+                        <option value="weekly">This Week</option>
+                    </select>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="search-restaurant" placeholder="Search restaurant...">
+                </div>
+            </div>
+            
+            <div class="leaderboard-list">
+                <!-- Leaderboard entries will be populated by JavaScript -->
+                <div class="empty">No donation data available yet</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Food Rescue Connect</h3>
+                    <p>Connecting excess food with those in need. Fighting hunger and reducing waste.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#leaderboard">Leaderboard</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Get Involved</h3>
+                    <ul>
+                        <li><a href="#">Donate Food</a></li>
+                        <li><a href="#">Find Food</a></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: info@foodrescueconnect.org</li>
+                        <li>Phone: (+91) 12345-67890</li>
+                        <li>Address: 123 Food Rescue Ave, City, State 12345</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Food Rescue Connect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals (added) -->
+    <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true">
+        <div id="modal" class="modal" role="dialog" aria-modal="true">
+            <!-- content injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backdrop = document.getElementById('modal-backdrop');
+            const modal = document.getElementById('modal');
+
+            // User state management
+            let currentUser = null;
+            
+            // Check if user is already logged in
+            function checkLoggedInUser() {
+                try {
+                    const user = JSON.parse(localStorage.getItem('frc_currentUser'));
+                    if (user) {
+                        currentUser = user;
+                        updateHeaderForLoggedInUser();
+                    }
+                } catch (e) {
+                    // No user logged in
+                }
+            }
+            
+            // Update header to show user info instead of auth buttons
+            function updateHeaderForLoggedInUser() {
+                const authButtons = document.querySelector('.auth-buttons');
+                if (currentUser && authButtons) {
+                    const avatarText = (currentUser.username || currentUser.name || currentUser.email).charAt(0).toUpperCase();
+                    
+                    authButtons.innerHTML = `
+                        <div class="user-welcome">
+                            <div class="user-avatar">${avatarText}</div>
+                            <span>Welcome, ${currentUser.username || currentUser.name || currentUser.email}</span>
+                            <button class="btn btn-outline btn-sm" id="logout-btn">Logout</button>
+                        </div>
+                    `;
+                    
+                    // Add logout functionality
+                    document.getElementById('logout-btn').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        logout();
+                    });
+                }
+            }
+            
+            // Restore auth buttons for logged out state
+            function restoreAuthButtons() {
+                const authButtons = document.querySelector('.auth-buttons');
+                if (authButtons) {
+                    authButtons.innerHTML = `
+                        <a href="#" class="btn btn-outline">Login</a>
+                        <a href="#" class="btn btn-primary">Sign Up</a>
+                    `;
+                    // Re-attach event listeners to new buttons
+                    attachAuthButtonListeners();
+                }
+            }
+            
+            // Logout function
+            function logout() {
+                currentUser = null;
+                localStorage.removeItem('frc_currentUser');
+                restoreAuthButtons();
+                alert('You have been logged out.');
+            }
+
+            // Utilities
+            function openModal(html) {
+                modal.innerHTML = html;
+                backdrop.style.display = 'flex';
+                backdrop.setAttribute('aria-hidden', 'false');
+                modal.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', closeModal));
+            }
+            
+            function closeModal() {
+                backdrop.style.display = 'none';
+                backdrop.setAttribute('aria-hidden', 'true');
+                modal.innerHTML = '';
+            }
+            
+            backdrop.addEventListener('click', function(e) {
+                if (e.target === backdrop) closeModal();
+            });
+
+            // Storage helpers
+            function getUsers() {
+                try { return JSON.parse(localStorage.getItem('frc_users') || '[]'); } catch { return []; }
+            }
+            
+            function saveUsers(u){ localStorage.setItem('frc_users', JSON.stringify(u)); }
+            
+            function getDonations() {
+                try { return JSON.parse(localStorage.getItem('frc_donations') || '[]'); } catch { return []; }
+            }
+            
+            function saveDonations(d){ localStorage.setItem('frc_donations', JSON.stringify(d)); }
+
+            // Point calculation system
+            function calculatePointsFromDonation(donation) {
+                let totalPoints = 0;
+                
+                donation.items.forEach(item => {
+                    const quantity = item.quantity.toLowerCase();
+                    let numericValue = 0;
+                    
+                    const match = quantity.match(/(\d+(\.\d+)?)/);
+                    if (match) {
+                        numericValue = parseFloat(match[0]);
+                    }
+                    
+                    if (quantity.includes('kg') || quantity.includes('kilogram')) {
+                        totalPoints += numericValue * 10;
+                    } else if (quantity.includes('lb') || quantity.includes('pound')) {
+                        totalPoints += numericValue * 5;
+                    } else if (quantity.includes('loaf') || quantity.includes('bread')) {
+                        totalPoints += numericValue * 2;
+                    } else if (quantity.includes('meal')) {
+                        totalPoints += numericValue * 3;
+                    } else {
+                        totalPoints += numericValue;
+                    }
+                });
+                
+                return Math.round(totalPoints);
+            }
+
+            // Leaderboard data management
+            function getLeaderboardData() {
+                try {
+                    return JSON.parse(localStorage.getItem('frc_leaderboard') || '{}');
+                } catch {
+                    return {};
+                }
+            }
+
+            function saveLeaderboardData(data) {
+                localStorage.setItem('frc_leaderboard', JSON.stringify(data));
+            }
+
+            function updateLeaderboard(donation) {
+                const leaderboard = getLeaderboardData();
+                const restaurantName = donation.restaurant.trim().toLowerCase();
+                const points = calculatePointsFromDonation(donation);
+                
+                if (!leaderboard[restaurantName]) {
+                    leaderboard[restaurantName] = {
+                        name: donation.restaurant.trim(),
+                        points: 0,
+                        donations: 0,
+                        lastDonation: donation.postedAt
+                    };
+                }
+                
+                leaderboard[restaurantName].points += points;
+                leaderboard[restaurantName].donations += 1;
+                leaderboard[restaurantName].lastDonation = donation.postedAt;
+                
+                saveLeaderboardData(leaderboard);
+            }
+
+            function getSortedLeaderboard(timeframe = 'all-time') {
+                const leaderboard = getLeaderboardData();
+                const donations = getDonations();
+                const now = Date.now();
+                
+                let filteredLeaderboard = { ...leaderboard };
+                
+                if (timeframe !== 'all-time') {
+                    let timeThreshold;
+                    if (timeframe === 'monthly') {
+                        timeThreshold = now - (30 * 24 * 60 * 60 * 1000);
+                    } else if (timeframe === 'weekly') {
+                        timeThreshold = now - (7 * 24 * 60 * 60 * 1000);
+                    }
+                    
+                    Object.keys(filteredLeaderboard).forEach(restaurant => {
+                        if (filteredLeaderboard[restaurant].lastDonation < timeThreshold) {
+                            delete filteredLeaderboard[restaurant];
+                        }
+                    });
+                }
+                
+                return Object.values(filteredLeaderboard)
+                    .sort((a, b) => b.points - a.points)
+                    .map((entry, index) => ({
+                        ...entry,
+                        rank: index + 1
+                    }));
+            }
+
+            function renderLeaderboard(timeframe = 'all-time', searchTerm = '') {
+                const leaderboardList = document.querySelector('.leaderboard-list');
+                const sortedData = getSortedLeaderboard(timeframe);
+                
+                let filteredData = sortedData;
+                if (searchTerm) {
+                    const term = searchTerm.toLowerCase();
+                    filteredData = sortedData.filter(entry => 
+                        entry.name.toLowerCase().includes(term)
+                    );
+                }
+                
+                if (filteredData.length === 0) {
+                    leaderboardList.innerHTML = '<div class="empty">No restaurants match your criteria</div>';
+                    return;
+                }
+                
+                let html = `
+                    <div class="leaderboard-header">
+                        <div>Rank</div>
+                        <div>Restaurant</div>
+                        <div>Points</div>
+                        <div>Food Donated</div>
+                    </div>
+                `;
+                
+                filteredData.forEach(entry => {
+                    const avatarText = entry.name.charAt(0).toUpperCase();
+                    
+                    html += `
+                        <div class="leaderboard-entry">
+                            <div class="rank ${entry.rank <= 3 ? `rank-${entry.rank}` : ''}">
+                                ${entry.rank <= 3 ? '<span class="medal">🏆</span>' : entry.rank}
+                            </div>
+                            <div class="restaurant-info">
+                                <div class="restaurant-avatar">${avatarText}</div>
+                                <div class="restaurant-name">${entry.name}</div>
+                            </div>
+                            <div class="points">${entry.points} pts</div>
+                            <div class="food-donated">${entry.donations} donation${entry.donations !== 1 ? 's' : ''}</div>
+                        </div>
+                    `;
+                });
+                
+                leaderboardList.innerHTML = html;
+            }
+
+            // Initialize leaderboard and check login status when page loads
+            renderLeaderboard();
+            checkLoggedInUser();
+            
+            // Add event listeners for leaderboard controls
+            const timeframeSelect = document.getElementById('timeframe');
+            const searchInput = document.getElementById('search-restaurant');
+            
+            if (timeframeSelect) {
+                timeframeSelect.addEventListener('change', function() {
+                    renderLeaderboard(this.value, searchInput.value);
+                });
+            }
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    renderLeaderboard(timeframeSelect.value, this.value);
+                });
+            }
+
+            // Auth forms - UPDATED to include username
+            function showAuth(mode) {
+                const isLogin = mode === 'login';
+                openModal(`
+                    <button class="modal-close" title="Close">&times;</button>
+                    <h3>${isLogin ? 'Login' : 'Create Account'}</h3>
+                    <form id="auth-form">
+                        ${isLogin ? '' : `
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" name="username" required placeholder="Choose a username">
+                            </div>
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" name="name" required placeholder="Your full name">
+                            </div>
+                        `}
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" required minlength="4" placeholder="At least 4 characters">
+                        </div>
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-outline modal-close">Cancel</button>
+                            <button type="submit" class="btn btn-primary">${isLogin ? 'Login' : 'Create Account'}</button>
+                        </div>
+                    </form>
+                `);
+                
+                const form = modal.querySelector('#auth-form');
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const fd = new FormData(form);
+                    const email = fd.get('email').trim();
+                    const password = fd.get('password').trim();
+                    const users = getUsers();
+
+                    if (isLogin) {
+                        const user = users.find(u => u.email === email && u.password === password);
+                        if (user) {
+                            // Login successful
+                            currentUser = user;
+                            localStorage.setItem('frc_currentUser', JSON.stringify(user));
+                            updateHeaderForLoggedInUser();
+                            closeModal();
+                            alert(`Welcome back, ${user.username || user.name || user.email}!`);
+                        } else {
+                            alert('Invalid email or password. Please try again.');
+                        }
+                    } else {
+                        // Sign up
+                        const username = fd.get('username').trim();
+                        const name = fd.get('name').trim();
+                        
+                        // Validation
+                        if (users.find(u => u.email === email)) {
+                            alert('An account already exists with this email.');
+                            return;
+                        }
+                        
+                        if (users.find(u => u.username === username)) {
+                            alert('This username is already taken. Please choose another.');
+                            return;
+                        }
+                        
+                        const newUser = { 
+                            email, 
+                            password, 
+                            username, 
+                            name, 
+                            createdAt: Date.now() 
+                        };
+                        
+                        users.push(newUser);
+                        saveUsers(users);
+                        
+                        // Auto-login after signup
+                        currentUser = newUser;
+                        localStorage.setItem('frc_currentUser', JSON.stringify(newUser));
+                        updateHeaderForLoggedInUser();
+                        
+                        closeModal();
+                        alert(`Account created successfully! Welcome to Food Rescue Connect, ${username}!`);
+                    }
+                });
+            }
+
+            // Donate form with multiple items
+            function showDonateForm() {
+                // Check if user is logged in
+                if (!currentUser) {
+                    alert('Please log in or create an account to donate food.');
+                    showAuth('login');
+                    return;
+                }
+                
+                let itemCounter = 1;
+                
+                function addItemEntry() {
+                    const itemsContainer = modal.querySelector('#items-container');
+                    const newItem = document.createElement('div');
+                    newItem.className = 'item-entry';
+                    newItem.innerHTML = `
+                        <div class="item-header">
+                            <strong>Item #${itemCounter}</strong>
+                            <button type="button" class="remove-item" ${itemCounter === 1 ? 'disabled' : ''}>&times;</button>
+                        </div>
+                        <div class="form-group">
+                            <label>Item Description</label>
+                            <input name="item[]" required placeholder="e.g., Fresh bread, pasta, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input name="quantity[]" required placeholder="e.g., 10 loaves, 5 kg, etc.">
+                        </div>
+                    `;
+                    itemsContainer.appendChild(newItem);
+                    
+                    const removeBtn = newItem.querySelector('.remove-item');
+                    if (removeBtn) {
+                        removeBtn.addEventListener('click', function() {
+                            if (itemsContainer.children.length > 1) {
+                                newItem.remove();
+                                updateItemNumbers();
+                            }
+                        });
+                    }
+                    
+                    itemCounter++;
+                }
+                
+                function updateItemNumbers() {
+                    const items = modal.querySelectorAll('.item-entry');
+                    items.forEach((item, index) => {
+                        const header = item.querySelector('.item-header strong');
+                        header.textContent = `Item #${index + 1}`;
+                        
+                        const removeBtn = item.querySelector('.remove-item');
+                        removeBtn.disabled = index === 0;
+                    });
+                    itemCounter = items.length + 1;
+                }
+                
+                openModal(`
+                    <button class="modal-close" title="Close">&times;</button>
+                    <h3>Donate Food</h3>
+                    <p>Logged in as: ${currentUser.username || currentUser.name}</p>
+                    <form id="donate-form">
+                        <div class="form-group">
+                            <label>Restaurant Name</label>
+                            <input name="restaurant" required placeholder="Your restaurant or business name">
+                        </div>
+                        <div class="form-group">
+                            <label>Pickup Address</label>
+                            <input name="address" required placeholder="Full address for pickup">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Information</label>
+                            <input name="contact" required placeholder="Phone or email for coordination" value="${currentUser.email}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <label>Food Items</label>
+                                <button type="button" id="add-item-btn" class="btn btn-sm btn-outline">+ Add Another Item</button>
+                            </div>
+                            <div id="items-container">
+                                <!-- Items will be added here dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-outline modal-close">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit Donation</button>
+                        </div>
+                    </form>
+                `);
+                
+                addItemEntry();
+                
+                const addItemBtn = modal.querySelector('#add-item-btn');
+                addItemBtn.addEventListener('click', addItemEntry);
+                
+                const form = modal.querySelector('#donate-form');
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const fd = new FormData(form);
+                    
+                    const items = [];
+                    const itemInputs = modal.querySelectorAll('input[name="item[]"]');
+                    const quantityInputs = modal.querySelectorAll('input[name="quantity[]"]');
+                    
+                    for (let i = 0; i < itemInputs.length; i++) {
+                        if (itemInputs[i].value.trim() && quantityInputs[i].value.trim()) {
+                            items.push({
+                                item: itemInputs[i].value.trim(),
+                                quantity: quantityInputs[i].value.trim()
+                            });
+                        }
+                    }
+                    
+                    if (items.length === 0) {
+                        alert('Please add at least one food item.');
+                        return;
+                    }
+                    
+                    const donation = {
+                        restaurant: fd.get('restaurant').trim(),
+                        address: fd.get('address').trim(),
+                        contact: fd.get('contact').trim(),
+                        items: items,
+                        postedAt: Date.now(),
+                        donor: currentUser.username || currentUser.email
+                    };
+                    
+                    const donations = getDonations();
+                    donations.unshift(donation);
+                    saveDonations(donations);
+                    
+                    updateLeaderboard(donation);
+                    
+                    closeModal();
+                    alert('Thank you for your donation! It will appear in Find Food / Map.');
+                    
+                    renderLeaderboard();
+                });
+            }
+
+            // Show donations list
+            function showDonations({ mapMode=false } = {}) {
+                const donations = getDonations();
+                let html = `<button class="modal-close" title="Close">&times;</button><h3>${mapMode ? 'Available Donations — Map Links' : 'Available Donations'}</h3>`;
+                
+                if (!donations.length) {
+                    html += `<div class="empty">No donations found. Be the first to donate!</div>`;
+                    html += `<div class="modal-actions"><button class="btn btn-primary" id="open-donate">Donate Food</button></div>`;
+                } else {
+                    html += `<div style="max-height:360px; overflow:auto;">`;
+                    donations.forEach((d, i) => {
+                        const when = new Date(d.postedAt).toLocaleString();
+                        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.address)}`;
+                        
+                        html += `<div class="list-item">
+                                    <strong>${d.restaurant}</strong><br>
+                                    <small>${d.address} • ${d.contact || 'no contact'} • ${when}</small>`;
+                        
+                        d.items.forEach((item, itemIndex) => {
+                            html += `<div style="margin-top: 8px;">
+                                        <div><strong>${item.item}</strong> — ${item.quantity}</div>
+                                        <div class="claim-section">
+                                            <div class="quantity-selector">
+                                                <label for="quantity-${i}-${itemIndex}">Claim Quantity:</label>
+                                                <input type="number" id="quantity-${i}-${itemIndex}" min="1" max="${parseInt(item.quantity) || 1}" value="1">
+                                                <button class="btn btn-primary claim-btn" data-donation="${i}" data-item="${itemIndex}">Claim</button>
+                                            </div>
+                                        </div>
+                                     </div>`;
+                        });
+                        
+                        html += `<div style="margin-top:6px;">
+                                    <a class="btn btn-outline" target="_blank" href="${mapsUrl}">Open in Google Maps</a>
+                                </div>
+                             </div>`;
+                    });
+                    html += `</div>`;
+                }
+                
+                openModal(html);
+
+                modal.querySelectorAll('.claim-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const donationIndex = parseInt(this.getAttribute('data-donation'));
+                        const itemIndex = parseInt(this.getAttribute('data-item'));
+                        const quantityInput = document.getElementById(`quantity-${donationIndex}-${itemIndex}`);
+                        const quantity = parseInt(quantityInput.value);
+                        const maxQuantity = parseInt(quantityInput.max);
+                        const donation = donations[donationIndex];
+                        const item = donation.items[itemIndex];
+                        
+                        if (quantity < 1) {
+                            alert('Please enter a valid quantity (at least 1).');
+                            return;
+                        }
+                        
+                        if (quantity > maxQuantity) {
+                            alert(`Cannot claim more than ${maxQuantity} (available quantity).`);
+                            return;
+                        }
+                        
+                        alert(`Claim submitted for ${quantity} of ${item.item} from ${donation.restaurant}!\n\nDonor contact: ${donation.contact || 'Please use map for location'}\n\nThis is a demo - in a real app, this would notify the donor and coordinate pickup.`);
+                        
+                        const newQuantity = maxQuantity - quantity;
+                        if (newQuantity > 0) {
+                            quantityInput.max = newQuantity;
+                            quantityInput.value = Math.min(quantity, newQuantity);
+                            const quantityDisplay = modal.querySelector(`#quantity-${donationIndex}-${itemIndex}`).closest('.claim-section').previousElementSibling;
+                            quantityDisplay.innerHTML = `<div><strong>${item.item}</strong> — ${newQuantity}</div>`;
+                        } else {
+                            donation.items.splice(itemIndex, 1);
+                            
+                            if (donation.items.length === 0) {
+                                donations.splice(donationIndex, 1);
+                            }
+                            
+                            saveDonations(donations);
+                            closeModal();
+                            showDonations({ mapMode });
+                        }
+                    });
+                });
+
+                const openDonate = modal.querySelector('#open-donate');
+                if (openDonate) openDonate.addEventListener('click', showDonateForm);
+            }
+
+            // Attach event listeners to auth buttons
+            function attachAuthButtonListeners() {
+                document.querySelectorAll('.auth-buttons .btn').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const text = (this.textContent || '').trim();
+                        if (/login/i.test(text)) {
+                            showAuth('login');
+                        } else if (/sign up/i.test(text) || /signup/i.test(text)) {
+                            showAuth('signup');
+                        }
+                    });
+                });
+            }
+
+            // Initial attachment of auth button listeners
+            attachAuthButtonListeners();
+
+            // Wire up other buttons by text content
+            document.querySelectorAll('.btn:not(.auth-buttons .btn)').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const text = (this.textContent || '').trim();
+                    if (/donate food/i.test(text)) {
+                        showDonateForm();
+                    } else if (/find food/i.test(text)) {
+                        showDonations({ mapMode:false });
+                    } else if (/learn more/i.test(text)) {
+                        alert('Loading more info (demo).');
+                    }
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
